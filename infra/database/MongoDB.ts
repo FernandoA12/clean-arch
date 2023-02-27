@@ -1,13 +1,8 @@
 import "dotenv/config";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-const uri = `mongodb+srv://${encodeURIComponent(
-  process.env.DATABASE_USER || ""
-)}:${encodeURIComponent(process.env.DATABASE_PASSWORD || "")}@${
-  process.env.DATABASE_HOST
-}/?retryWrites=true&w=majority`;
 
-const MongoDB = new MongoClient(uri, {
+const MongoDB = new MongoClient(process.env.MONGODB_URI, {
   serverApi: ServerApiVersion.v1,
 });
 

@@ -3,16 +3,10 @@ import { Product } from "../../../domain/entities/Product";
 import { ProductsRepository } from "./../../../application/repositories/ProductsRepository";
 
 export class ProductsRepositoryMemory implements ProductsRepository {
-  private products: Product.Props[] = [];
+  private products: Product[] = [];
 
   async save(product: Product): Promise<void> {
-    this.products.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: product.quantity,
-      status: product.status,
-    });
+    this.products.push(product);
   }
 
   async count() {
@@ -21,5 +15,9 @@ export class ProductsRepositoryMemory implements ProductsRepository {
 
   async getAll(): Promise<Product[]> {
     return this.products.map((p) => ProductAdapter.create(p));
+  }
+
+  async findById(id:string): Promise<Product | null> {
+    return this.products.find((productItem)=>productItem.id===id);
   }
 }

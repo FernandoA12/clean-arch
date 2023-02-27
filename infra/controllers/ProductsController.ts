@@ -1,8 +1,10 @@
 import { ProductsRepositoryMemory } from "./../repositories/memory/ProductsRepositoryMemory";
 import { CreateProduct } from "../../application/useCases/CreateProduct";
 import { CryptoIdentifier } from "../security/CryptoIdentifier";
+import { BuyProduct } from "../../application/useCases/BuyProduct";
+import { ProductsRepositoryDatabase } from "../repositories/database/ProductRepositoryDatabase";
 
-const productsRepository = new ProductsRepositoryMemory();
+const productsRepository = new ProductsRepositoryDatabase();
 
 export class ProductsController {
   static async create(_, data) {
@@ -14,5 +16,10 @@ export class ProductsController {
 
   static async getAll() {
     return await productsRepository.getAll();
+  }
+
+  static async buy(_, data){
+    const buyProduct=new BuyProduct(productsRepository)
+    return await buyProduct.execute(data)
   }
 }
