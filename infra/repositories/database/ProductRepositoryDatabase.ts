@@ -1,12 +1,12 @@
 import { ProductsRepository } from "../../../application/repositories/ProductsRepository";
 import { Product } from "../../../domain/entities/Product";
-import {connection} from '../../database/MongoDB'
+import { connection } from "../../database/MongoDB";
 
 export class ProductsRepositoryDatabase implements ProductsRepository {
-  private collection=connection.collection('products');
-  
+  private collection = connection.collection("products");
+
   async save(product: Product): Promise<void> {
-    await this.collection.insertOne(product)
+    await this.collection.insertOne(product);
   }
 
   async count() {
@@ -14,10 +14,14 @@ export class ProductsRepositoryDatabase implements ProductsRepository {
   }
 
   async getAll(): Promise<Product[]> {
-    return [] as Product[]
+    return [] as Product[];
   }
 
   async findById(id: string): Promise<Product> {
     return null;
+  }
+
+  async update(product: Product): Promise<void> {
+    await this.collection.updateOne({ id: product.id }, { $set: product });
   }
 }
